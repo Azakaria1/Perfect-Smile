@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3" style="max-width: 600px">
+
+        <div style="align-content: center">
+            <img th:src="@{../images/dents.jpg}" width="500" height="333"/>
+        </div>
+
+        <form method="post" th:action="@{save}" th:object="${intervention}">
+
+
+            <div>
+                <label>Dent</label>
+                <input id="nbDent" class="form-control" type="text" name="nbDent" th:value="${intervention.nbDent}">
+                <span class="text-danger" th:errors="${intervention.nbDent}"></span>
+            </div>
+            <div>
+
+                <label>Prix</label>
+                <input id="prix" class="form-control" type="text" name="prix" th:value="${intervention.prix}">
+                <span class="text-danger" th:errors="${intervention.prix}"></span>
+
+            </div>
+            <div>
+                <label>Acte</label>
+                <ul>
+                    <li th:each="acte : ${actes}">
+                        <input type="checkbox" th:field="${intervention.actes}" th:value="${acte.idActe}"
+                               th:text="${acte.libelle}"/>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <label>Consultation</label>
+                <ul>
+                    <li th:each="consultation : ${consultations}">
+                        <input type="checkbox" th:field="${intervention.consultations}"
+                               th:value="${consultation.idConsultation}"
+                               th:text="${consultation.motif}"/>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Save</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

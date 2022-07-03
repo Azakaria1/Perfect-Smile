@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${utilisateur.nom} + ' ' +${utilisateur.prenom}"></title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row align-items-center my-4">
+                    <div class="col">
+                        <h2 class="h3 mb-0 page-title">Profil</h2>
+                    </div>
+
+                </div>
+                <div class="content-header row">
+
+                </div>
+                <div class="row my-4">
+                    <div class="col-md-12">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Nom complet : </strong>
+                                        <span th:text="${utilisateur.nom} + ' ' +${utilisateur.prenom}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Date de naissance : </strong>
+                                        <span th:text="${utilisateur.date_naissance}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Téléphone : </strong>
+                                        <span th:text="${utilisateur.tel}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Adresse Email : </strong>
+                                        <span th:text="${utilisateur.email}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Rôle : </strong>
+                                        <th:block th:each="role : ${roles}">
+                                            <span th:text="${role.nom}+ ' '"/>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12" sec:authorize="hasAuthority('Patient')">
+                                    <div class="form-group" th:if="${!dossier.grpSanguin.equals('')}">
+                                        <strong >Groupe Sanguin : </strong>
+                                        <span th:text="${dossier.grpSanguin}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12" sec:authorize="hasAuthority('Patient')">
+                                    <div class="form-group" th:if="${!dossier.maladie.equals('')}">
+                                        <strong>Maladie : </strong>
+                                        <span th:text="${dossier.maladie}"></span>
+                                    </div>
+                                </div>
+                                <div  class="col-xs-12 col-sm-12 col-md-12"  sec:authorize="hasAuthority('Patient')">
+                                    <div class="form-group" th:if="${!dossier.typeMaladie.equals('')}">
+                                        <strong >Type de la maladie : </strong>
+                                        <span th:text="${dossier.typeMaladie}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12" sec:authorize="hasAuthority('Patient')" >
+                                    <div class="form-group" th:if="${!dossier.allergie.equals('')}">
+                                        <strong>Allergie : </strong>
+                                        <span th:text="${dossier.allergie}"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12" sec:authorize="hasAuthority('Patient')" >
+                                    <div class="form-group" th:if="${!dossier.traitement.equals('')}">
+                                        <strong>Traitement Suivi : </strong>
+                                        <span th:text="${dossier.traitement}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- .col-md-12 -->
+                </div> <!-- end section row my-4 -->
+
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</div>
+</body>
+</html>

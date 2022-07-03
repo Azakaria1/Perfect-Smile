@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3">
+
+        <form method="post"
+              th:action="@{/rdv/update/__${rdv.idRDV}__(page=${page},keyword=${keyword})}">
+
+
+            <div>
+                <label>Motif</label>
+                <input id="motif" class="form-control" type="text" name="motif" th:value="${rdv.motif}">
+
+                <span class="text-danger" th:errors="${rdv.motif}"></span>
+            </div>
+            <div>
+
+                <label>Statut</label>
+                <select th:field="${rdv.statut} ">
+                    <option th:value="'En attente'" th:text="'En attente'"></option>
+                    <option th:value="'Accepté'" th:text="'Accepté'"></option>
+                    <option th:value="'Terminé'" th:text="'Terminé'"></option>
+                    <option th:value="'Annulé'" th:text="'Annulé'"></option>
+                </select>
+            </div>
+            <div>
+                <label>Date</label>
+                <input id="dateRDV" class="form-control" type="date" name="dateRDV" th:value="${rdv.dateRDV}">
+                <span class="text-danger" th:errors="${rdv.dateRDV}"></span>
+            </div>
+            <div>
+                <label>Heure</label>
+                <input id="heureRDV" class="form-control" type="time" name="heureRDV"
+                       th:value="${rdv.heureRDV}">
+                <span class="text-danger" th:errors="${rdv.heureRDV}"></span>
+            </div>
+            <div>
+
+                <label>Patient</label>
+                <select th:field="${rdv.patient}">
+                    <option th:each="patient : ${patients}"
+                            th:text="${patient.nom} + ' ' + ${patient.prenom}"
+                            th:value="${patient.idUtilisateur}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Médecin</label>
+                <select th:field="${rdv.medecin}">
+                    <option th:each="medecin : ${medecins}"
+                            th:text="${medecin.nom} + ' ' + ${medecin.prenom}"
+                            th:value="${medecin.idUtilisateur}">
+                    </option>
+                </select>
+                <div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

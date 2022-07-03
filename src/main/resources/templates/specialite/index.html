@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
+          type="text/css"/>
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <form method="POST" th:action="@{/}">
+                    <div class="row align-itms-center my-4">
+                        <div class="col">
+                            <h2 class="h3 mb-0 page-title">Liste des Spécialités</h2>
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-success" style="color:white" th:href="@{/specialite/add}">
+                                <span style="color:white"></span>Ajouter</i>
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-12 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <ol class="breadcrumb">
+
+                                        <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
+                                        <li class="breadcrumb-item active">Spécialités</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-8">
+                        <div class="col-md-12">
+                            <div class="card-body">
+
+                                <div class="d-flex" style="float: right">
+                                    <form method="get" style="float: right" th:action="@{/specialite/}">
+                                        <input name="keyword" th:value="${keyword}" type="text">
+                                        <button class="btn btn-primary" type="submit"><i
+                                                class="fa fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container mt-2">
+                        <div class="card">
+                            <div class="card-header">Liste des Spécialités</div>
+                            <div class="card-body">
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nom de la spécialité</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="specialite:${specialites}">
+                                        <td th:text="${specialite.idSpecialite}"></td>
+                                        <td th:text="${specialite.nom}"></td>
+
+                                        <td sec:authorize="hasAuthority('Assistant')">
+                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
+                                               th:href="@{delete(id=${specialite.idActe},keyword=${keyword},page=${currentPage})}">Supprimer</a>
+                                        </td>
+                                        <td sec:authorize="hasAuthority('Assistant')">
+                                            <a class="btn btn-success"
+                                               th:href="@{edit/__${specialite.idActe}__(id=${specialite.idActe},keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <ul class="nav nav-pills">
+                                    <li th:each="page,status:${pages}">
+                                        <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+                                           th:href="@{index(page=${status.index},keyword=${keyword})}"
+                                           th:text="${status.index}"
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

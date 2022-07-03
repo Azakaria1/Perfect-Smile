@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <!--  <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"> -->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
+          type="text/css"/>
+
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <form method="POST" th:action="@{/secretaire/}">
+                    <div class="row align-itms-center my-4">
+                        <div class="col">
+                            <h2 class="h3 mb-0 page-title">Liste des Secrétaires</h2>
+                        </div>
+                        <div class="col-auto">
+                            <a th:href="@{/secretaire/add}" class="btn btn-success" style="color:white">
+                                <span style="color:white"></span><i class="fa fa-user-plus" aria-hidden="true"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-12 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <ol class="breadcrumb">
+
+                                        <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
+                                        <li class="breadcrumb-item active">Secrétaires</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-8">
+                        <div class="col-md-12">
+                            <div class="card-body">
+
+                                <div style="float: right" class="d-flex">
+                                    <form method="get" style="float: right" th:action="@{/secretaire/}">
+                                        <input name="keyword" th:value="${keyword}" type="text">
+                                        <button class="btn btn-primary" type="submit"><i
+                                                class="fa fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-10">
+                        <div class="col-md-12">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <!-- table -->
+                                    <table class="table datatables" id="dataTable-1">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nom Complet</th>
+                                            <th>Email</th>
+                                            <th width="230px">Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr th:each="p:${secretaire}">
+                                            <td th:text="${p.idUtilisateur}"></td>
+                                            <td th:text="${p.getUsername()}"></td>
+                                            <td th:text="${p.email}"></td>
+
+
+                                            <td sec:authorize="hasAuthority('Secrétaire')">
+                                                <a onclick="return confirm('Are you fl mario ??')"
+                                                   class="btn btn-danger"
+                                                   th:href="@{delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    Supprimer</a>
+                                            </td>
+                                            <td sec:authorize="hasAuthority('Secrétaire')">
+                                                <a class="btn btn-warning"
+                                                   th:href="@{edit/__${p.idUtilisateur}__(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
+                                                    <i class="fa fa-edit"></i>
+                                                    Modifier</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end table -->
+                                    <ul class="nav nav-pills">
+                                        <li th:each="page,status:${pages}">
+                                            <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+                                               th:text="${status.index}"
+                                               th:href="@{index(page=${status.index},keyword=${keyword})}"
+                                            ></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> <!-- .col-md-12 -->
+                    </div> <!-- end section row my-4 -->
+                    </form>
+                </div> <!-- .col-12 -->
+            </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+
+    </div>
+    <div>
+    </div>
+</div>
+</body>
+</html>

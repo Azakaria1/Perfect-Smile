@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <!--  <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"> -->
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" type="text/css"/>
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <form method="POST" th:action="@{index}">
+                    <div class="row align-itms-center my-4">
+                        <div class="col">
+                            <h2 class="h3 mb-0 page-title">Liste des Permissions</h2>
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-success" style="color:white" th:href="@{/permission/add}">
+                                <span style="color:white"></span><i aria-hidden="true" class="fa fa-plus"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="content-header row">
+                <div class="content-header-left col-md-12 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <ol class="breadcrumb">
+
+                                        <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
+                                        <li class="breadcrumb-item active">Permissions</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-8">
+                        <div class="col-md-12">
+                            <div class="card-body">
+
+                                <div class="d-flex" style="float: right">
+                                    <form method="get" th:action="@{/permission/}">
+                                        <input name="keyword" th:value="${keyword}" type="text">
+                                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container mt-2">
+                        <div class="card">
+                            <div class="card-header">Liste des Patients</div>
+                            <div class="card-body">
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nom</th>
+                                        <th> <!--sec:authorize="hasRole('Administrateur')"-->Supprimer</th>
+                                        <th> <!--sec:authorize="hasRole('Administrateur')"-->Modifier</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="p:${permissions}">
+                                        <td th:text="${p.id_Permission}"></td>
+                                        <td th:text="${p.nom } "></td>
+                                        <td> <!--sec:authorize="hasRole('Administrateur')"-->
+                                            <a class="btn btn-danger" onclick="return confirm('Are you sure ??')"
+                                               th:href="@{delete(id=${p.id_Permission},keyword=${keyword},page=${currentPage} )}">Supprimer</a>
+                                        </td>
+                                        <td> <!--sec:authorize="hasRole('Secretaire')"-->
+                                            <a class="btn btn-success"
+                                               th:href="@{edit/__${p.id_Permission}__(keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <ul class="nav nav-pills">
+                                    <li th:each="page,status:${pages}">
+                                        <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
+                                           th:href="@{index(page=${status.index},keyword=${keyword})}"
+                                           th:text="${status.index}"
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+</body>
+</html>

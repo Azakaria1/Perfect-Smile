@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row align-items-center my-4">
+                    <div class="col">
+                        <h2 class="h3 mb-0 page-title">Nouveau Rendez-Vous</h2>
+                    </div>
+                    <div class="col-auto">
+
+                        <a class="btn btn-primary" style="color:white" th:href="@{/rdv/}">
+                            <span style="color:white"></span> Retour
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="content-header row">
+                    <div class="content-header-left col-md-12 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="breadcrumb-wrapper col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <ol class="breadcrumb">
+
+                                            <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
+                                            <li class="breadcrumb-item"><a
+                                                    th:href="@{/rdv/}">Rendez-Vous</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">Nouveau Rendez-Vous</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-body mt-4">
+
+
+                                <div class="col-md-6 offset-3">
+
+                                    <form method="post" th:action="@{/rdv/saveR(page=${page},keyword=${keyword})}">
+
+                                        <div>
+                                            <label>Motif</label>
+                                            <input class="form-control" id="motif" name="motif"
+                                                   th:value="${rendezVous.motif}" type="text">
+                                            <span class="text-danger" th:errors="${rendezVous.motif}"></span>
+                                        </div>
+                                        <div sec:authorize="!hasAuthority('Patient')">
+
+                                            <label>Statut</label>
+                                            <select th:field="${rendezVous.statut}">
+                                                <option th:text="'En attente'" th:value="'En attente'"></option>
+                                                <option th:text="'Accepté'" th:value="'Accepté'"></option>
+                                                <option th:text="'Terminé'" th:value="'Terminé'"></option>
+                                                <option th:text="'Annulé'" th:value="'Annulé'"></option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label>Date</label>
+                                            <input class="form-control" id="dateRDV" name="dateRDV"
+                                                   th:value="${rendezVous.dateRDV}"
+                                                   type="date">
+                                            <span class="text-danger" th:errors="${rendezVous.dateRDV}"></span>
+                                        </div>
+                                        <div>
+                                            <label>Heure</label>
+                                            <input class="form-control" id="heureRDV" name="heureRDV"
+                                                   th:value="${rendezVous.heureRDV}"
+                                                   type="time">
+                                            <span class="text-danger" th:errors="${rendezVous.heureRDV}"></span>
+                                        </div>
+                                        <div sec:authorize="!hasAuthority('Patient')">
+
+                                            <label>Patient</label>
+                                            <select th:field="${rendezVous.patient}">
+                                                <option th:each="patient : ${patients}"
+                                                        th:text="${patient.nom} + ' ' + ${patient.prenom}"
+                                                        th:value="${patient.idUtilisateur}">
+                                                </option>
+                                            </select>
+
+                                            <label>Médecin</label>
+                                            <select th:field="${rendezVous.medecin}">
+                                                <option th:each="medecin : ${medecins}"
+                                                        th:text="${medecin.nom} + ' ' + ${medecin.prenom}"
+                                                        th:value="${medecin.idUtilisateur}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div hidden sec:authorize="hasAuthority('Patient')">
+                                            <label>Médecin</label>
+                                            <input class="form-control" id="medecin" name="medecin"
+                                                   th:field="${rendezVous.medecin}" th:value="${medecin}"
+                                                   type="text">
+                                            <span class="text-danger" th:errors="${rendezVous.medecin}"></span></div>
+
+                                        <div>
+                                            <button class="btn btn-primary" type="submit">Save</button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+</body>
+</html>

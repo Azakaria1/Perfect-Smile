@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content1">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row align-items-center my-4">
+                    <div class="col">
+                        <h2 class="h3 mb-0 page-title">Nouveau Patient</h2>
+                    </div>
+                    <div class="col-auto">
+
+                        <a th:href="@{/patient}" class="btn btn-primary" style="color:white">
+                            <span style="color:white"></span> Retour
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="content-header row">
+                    <div class="content-header-left col-md-12 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="breadcrumb-wrapper col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <ol class="breadcrumb">
+
+                                            <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
+                                            <li class="breadcrumb-item"><a
+                                                    th:href="@{/patient}">Patients</a>
+                                            </li>
+                                            <li class="breadcrumb-item active">Nouveau Patient</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-body mt-4">
+                                <form method="post" th:action="@{save}">
+
+                                    <div>
+
+                                        <label for="nom">Nom</label>
+                                        <input id="nom" class="form-control" type="text" name="nom"
+                                               th:value="${patient.nom}">
+                                        <span class="text-danger" th:errors="${patient.nom}"></span>
+                                    </div>
+                                    <div>
+
+                                        <label for="nom">Prénom</label>
+                                        <input id="prenom" class="form-control" type="text" name="prenom"
+                                               th:value="${patient.prenom}">
+                                        <span class="text-danger" th:errors="${patient.prenom}"></span>
+                                    </div>
+                                    <div>
+
+                                        <label for="cin">CIN</label>
+                                        <input id="cin" class="form-control" type="text" name="cin"
+                                               th:value="${patient.cin}">
+                                        <span class="text-danger" th:errors="${patient.cin}"></span>
+                                    </div>
+                                    <div>
+
+                                        <label for="email">Email</label>
+                                        <input id="email" class="form-control" type="email" name="email"
+                                               th:value="${patient.email}">
+                                        <span class="text-danger" th:errors="${patient.email}"></span>
+                                    </div>
+                                    <div>
+                                        <label for="password">Mot de Passe</label>
+                                        <input id="password" class="form-control" type="password" name="password"
+                                               th:value="${patient.password}">
+                                        <span class="text-danger" th:errors="${patient.password}"></span>
+                                    </div>
+                                    <div>
+                                        <label for="adresse">Adresse</label>
+                                        <input id="adresse" class="form-control" type="text" name="adresse"
+                                               th:value="${patient.adresse}">
+                                        <span class="text-danger" th:errors="${patient.adresse}"></span>
+                                    </div>
+                                    <div>
+                                        <label>Date de Naissance</label>
+                                        <input class="form-control" type="date" name="date_naissance"
+                                               th:value="${patient.date_naissance}">
+                                        <span class="text-danger" th:errors="${patient.date_naissance}"></span>
+                                        <div>
+                                            <div>
+
+                                                <label for="tel">Téléphone</label>
+                                                <input id="tel" class="form-control" type="text" name="tel"
+                                                       th:value="${patient.tel}">
+                                                <span class="text-danger" th:errors="${patient.tel}"></span>
+                                            </div>
+                                            <div>
+                                                <label>Sexe</label>
+                                                Homme <input th:type="radio" th:field="${patient.sexe}" value="H"/>
+                                                Femme <input th:type="radio" th:field="${patient.sexe}" value="F"/>
+
+                                                <span class="text-danger" th:errors="${patient.sexe}"></span>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfect Smile</title>
+    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
+          type="text/css"/>
+    <script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js"></script>
+
+</head>
+<body>
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Perfect Smile</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <div sec:authorize="isAuthenticated()">
+
+                    <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')"
+                        style="list-style-type: none">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                           href="#" id="navbarDropdown"
+                           role="button" style="color: black">
+                            <i aria-hidden="true" class="fa fa-users"></i>
+                            Utilisateurs
+                        </a>
+                        <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                            <li>
+                                <div class="d-flex">
+                                    <a class="dropdown-item" style="color: black" th:href="@{/medecin/}">Médecins
+                                    </a>
+                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/medecin/add}">
+                                        <i aria-hidden="true" class="fa fa-user-plus"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <div class="d-flex">
+                                    <a class="dropdown-item" style="color: black" th:href="@{/secretaire/}">Secrétaires
+                                    </a>
+                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/secretaire/add}">
+                                        <i aria-hidden="true" class="fa fa-user-plus"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <div class="d-flex">
+                                    <a class="dropdown-item" style="color: black" th:href="@{/assistant/}">Assistants
+                                    </a>
+                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/assistant/add}">
+                                        <i aria-hidden="true" class="fa fa-user-plus"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <div class="d-flex">
+                                    <a class="dropdown-item" style="color: black" th:href="@{/patient/}">Patients
+                                    </a>
+                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/patient/add}">
+                                        <i aria-hidden="true" class="fa fa-user-plus"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('Secrétaire')">
+                        <a class="nav-link" th:href="@{/role/}">
+                            Rôle</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('Secrétaire')">
+                        <a class="nav-link" th:href="@{/permission/}">
+                            Permission</a>
+                    </li>
+                </div>
+
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')">
+                        <a class="nav-link" th:href="@{/rdv/index}">
+                            Rendez-vous</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated() && !hasAnyAuthority('Assistant','Secrétaire')">
+                    <li class="nav-item" >
+                        <a class="nav-link" th:href="@{/medecin/}">
+                            <i aria-hidden="true" class="fa fa-users"></i>
+                            Médecins</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Patient')">
+                        <a class="nav-link" th:href="@{/rdv/}">
+                            Rendez-vous</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Patient')">
+                        <a class="nav-link" th:href="@{/consultation/}">
+                            Consultation</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin')">
+                        <a class="nav-link" th:href="@{/dossier/index}">
+                            Dossier Médicaux</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')">
+                        <a class="nav-link" th:href="@{/consultation/index}">
+                            Consultation</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Secrétaire','Assistant')">
+                        <a class="nav-link" th:href="@{/acte/}">
+                            Acte</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Secrétaire','Assistant')">
+                        <a class="nav-link" th:href="@{/specialite/}">
+                            Spécialité</a>
+                    </li>
+                </div>
+
+            </ul>
+            <th:block class="d-flex">
+                <li class="nav-item dropdown" sec:authorize="isFullyAuthenticated()" style="list-style-type: none">
+                    <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       href="#" id="navbarDropdown"
+                       role="button" style="color: black">
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                        <li><a class="dropdown-item" style="color: black" th:href="@{/profil}">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" style="color: black" th:href="@{/logout}">Déconnexion</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" sec:authorize="isAnonymous()" style="list-style-type: none">
+                    <a class="nav-link" style="color: black" th:href="@{/signUp}">S'inscrire</a>
+
+                </li>
+                <li class="nav-item" sec:authorize="isAnonymous()" style="list-style-type: none">
+                    <a class="nav-link" style="color: black" th:href="@{/login}">Se connecter</a>
+                </li>
+            </th:block>
+        </div>
+    </div>
+</nav>
+<section layout:fragment="content1">
+
+</section>
+
+</body>
+</html>
