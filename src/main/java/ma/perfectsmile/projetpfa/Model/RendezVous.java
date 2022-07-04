@@ -2,6 +2,7 @@ package ma.perfectsmile.projetpfa.Model;
 
 import lombok.*;
 import ma.perfectsmile.projetpfa.Annotations.DateRDValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +43,7 @@ public class RendezVous {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_patient")
-    private Patient patient;
+    private Patient patient = new Patient();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_medecin")

@@ -61,14 +61,14 @@
                                             <span class="text-danger" th:errors="${rendezVous.motif}"></span>
                                         </div>
                                         <div sec:authorize="!hasAuthority('Patient')">
+                                            <label hidden>Statut</label>
+                                            <input hidden th:field="${rendezVous.statut}" th:value="'Accepté'">
+                                        </div>
 
-                                            <label>Statut</label>
-                                            <select th:field="${rendezVous.statut}">
-                                                <option th:text="'En attente'" th:value="'En attente'"></option>
-                                                <option th:text="'Accepté'" th:value="'Accepté'"></option>
-                                                <option th:text="'Terminé'" th:value="'Terminé'"></option>
-                                                <option th:text="'Annulé'" th:value="'Annulé'"></option>
-                                            </select>
+                                        <div sec:authorize="hasAuthority('Patient')">
+
+                                            <label hidden>Statut</label>
+                                            <input hidden th:field="${rendezVous.statut}" th:value="'En attente'">
                                         </div>
                                         <div>
                                             <label>Date</label>

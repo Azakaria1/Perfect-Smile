@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" layout:decorate="layout"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
 
 >
 <head>
     <meta charset="UTF-8">
     <!--  <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"> -->
 
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" type="text/css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
           type="text/css"/>
 
@@ -26,8 +26,8 @@
                             <h2 class="h3 mb-0 page-title">Liste des Médecins</h2>
                         </div>
                         <div class="col-auto" sec:authorize="hasAuthority('Secrétaire')">
-                            <a th:href="@{/medecin/add}" class="btn btn-success" style="color:white">
-                                <span style="color:white"></span><i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <a class="btn btn-success" style="color:white" th:href="@{/medecin/add}">
+                                <span style="color:white"></span><i aria-hidden="true" class="fa fa-user-plus"></i>
                             </a>
 
                         </div>
@@ -54,7 +54,7 @@
                         <div class="col-md-12">
                             <div class="card-body">
 
-                                <div style="float: right" class="d-flex">
+                                <div class="d-flex" style="float: right">
                                     <form method="get" style="float: right" th:action="@{/medecin/}">
                                         <input name="keyword" th:value="${keyword}" type="text">
                                         <button class="btn btn-primary" type="submit"><i
@@ -77,7 +77,7 @@
                                             <th>Nom Complet</th>
                                             <th>Email</th>
                                             <th>Spécialité</th>
-                                            <th width="230px" >Action</th>
+                                            <th width="230px" sec:authorize="!hasAuthority('Médecin')">Action</th>
                                         </tr>
                                         </thead>
 
@@ -86,26 +86,24 @@
                                             <td th:text="${p.idUtilisateur}"></td>
                                             <td th:text="${p.getUsername()}"></td>
                                             <td th:text="${p.email}"></td>
-                                            <td th:text="${p.specialite}"> </td>
+                                            <td th:text="${p.specialite.nom}"></td>
 
+                                            <td sec:authorize="hasAuthority('Patient')">
+                                                <a class="btn btn-success"
+                                                   th:href="@{/rdv/addR/__${p.idUtilisateur}__(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
+                                                    Prendre un Rendez-Vous</a>
+                                            </td>
                                             <td sec:authorize="hasAuthority('Secrétaire')">
-                                                <a onclick="return confirm('Are you Sure ??')"
-                                                   class="btn btn-danger"
+                                                <a class="btn btn-danger"
+                                                   onclick="return confirm('Are you Sure ??')"
                                                    th:href="@{delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    <i aria-hidden="true" class="fa fa-trash"></i>
                                                     Supprimer</a>
                                             </td>
-                                            <td sec:authorize="hasAuthority('Patient')">
-                                            <a onclick="return confirm('Are you Sure ??')"
-                                               class="btn btn-danger"
-                                               th:href="@{delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                Supprimer</a>
-                                        </td>
                                             <td sec:authorize="hasAuthority('Secrétaire')">
                                                 <a class="btn btn-warning"
                                                    th:href="@{edit/__${p.idUtilisateur}__(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
-                                                    <i class="fa fa-edit"></i>
+                                                    <i aria-hidden="true" class="fa fa-edit"></i>
                                                     Modifier</a>
                                             </td>
                                         </tr>
@@ -115,8 +113,8 @@
                                     <ul class="nav nav-pills">
                                         <li th:each="page,status:${pages}">
                                             <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
-                                               th:text="${status.index}"
                                                th:href="@{index(page=${status.index},keyword=${keyword})}"
+                                               th:text="${status.index}"
                                             ></a>
                                         </li>
                                     </ul>

@@ -81,14 +81,14 @@
                                         </thead>
 
                                         <tbody>
-                                        <tr th:each="p:${patient}">
+                                        <tr th:each="p:${assistant}">
                                             <td th:text="${p.idUtilisateur}"></td>
                                             <td th:text="${p.getUsername()}"></td>
                                             <td th:text="${p.email}"></td>
                                             <td><p th:each="role : ${p.roles}" th:text="${role.nom}+' '"></p></td>
 
                                             <td sec:authorize="hasAuthority('Secrétaire')">
-                                                <a onclick="return confirm('Are you fl mario ??')"
+                                                <a onclick="return confirm('Are you Sure ??')"
                                                    class="btn btn-danger"
                                                    th:href="@{delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>

@@ -86,16 +86,6 @@
                                         <span class="text-danger" th:errors="${assistant.password}"></span>
                                     </div>
                                     <div>
-                                        <label>Rôle</label>
-                                        <ul>
-                                            <li th:each="role : ${roles}">
-                                                <input th:field="${assistant.roles}" th:text="${role.nom}"
-                                                       th:value="${role.idRole}"
-                                                       type="checkbox"/>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
                                         <label for="adresse">Adresse</label>
                                         <input class="form-control" id="adresse" name="adresse"
                                                th:value="${assistant.adresse}"

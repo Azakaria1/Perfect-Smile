@@ -67,7 +67,7 @@ public class AssistantController {
 
         if (bindingresult.hasErrors()) return "assistant/save";
         assistant.setPassword(passwordEncoder.encode(assistant.getPassword()));
-        assistant.getRoles().add(roleService.findDistinctByNom("Médecin"));
+        assistant.getRoles().add(roleService.findDistinctByNom("Assistant"));
         assistantService.ajouterAssistant(assistant);
 
         return "redirect:/assistant/?page=" + page + "&keyword=" + keyword;

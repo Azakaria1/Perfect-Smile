@@ -13,8 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
 @AllArgsConstructor
 @DiscriminatorValue("Patient")
 public class Patient extends Utilisateur{

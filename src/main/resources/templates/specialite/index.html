@@ -78,13 +78,13 @@
                                         <td th:text="${specialite.idSpecialite}"></td>
                                         <td th:text="${specialite.nom}"></td>
 
-                                        <td sec:authorize="hasAuthority('Assistant')">
+                                        <td sec:authorize="!hasAuthority('Patient')">
                                             <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
-                                               th:href="@{delete(id=${specialite.idActe},keyword=${keyword},page=${currentPage})}">Supprimer</a>
+                                               th:href="@{delete(id=${specialite.idSpecialite},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
-                                        <td sec:authorize="hasAuthority('Assistant')">
-                                            <a class="btn btn-success"
-                                               th:href="@{edit/__${specialite.idActe}__(id=${specialite.idActe},keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                        <td sec:authorize="!hasAuthority('Patient')">
+                                            <a class="btn btn-warning"
+                                               th:href="@{edit/__${specialite.idSpecialite}__(id=${specialite.idSpecialite},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>
                                     </tr>
 

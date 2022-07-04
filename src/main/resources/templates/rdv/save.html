@@ -68,16 +68,6 @@
                                                    th:value="${rendezVous.motif}" type="text">
                                             <span class="text-danger" th:errors="${rendezVous.motif}"></span>
                                         </div>
-                                        <div sec:authorize="!hasAuthority('Patient')">
-
-                                            <label>Statut</label>
-                                            <select th:field="${rendezVous.statut}">
-                                                <option th:text="'En attente'" th:value="'En attente'"></option>
-                                                <option th:text="'Accepté'" th:value="'Accepté'"></option>
-                                                <option th:text="'Terminé'" th:value="'Terminé'"></option>
-                                                <option th:text="'Annulé'" th:value="'Annulé'"></option>
-                                            </select>
-                                        </div>
                                         <div>
                                             <label>Date</label>
                                             <input class="form-control" id="dateRDV" name="dateRDV"

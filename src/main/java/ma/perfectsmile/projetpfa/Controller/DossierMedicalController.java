@@ -27,7 +27,7 @@ public class DossierMedicalController {
     @Autowired
     private UtilisateurServiceImpl utilisateurService;
 
-    @GetMapping(path = "/index")
+    @GetMapping(path = "/")
     public String dossierMedicaux(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "5") int size, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
 
         Page<DossierMedical> dossierMedicalParAllergie = dossierMedicalService.findByAllergieContainsIgnoreCase(keyword, PageRequest.of(page, size));
@@ -52,7 +52,7 @@ public class DossierMedicalController {
     @GetMapping(path = "/delete")
     public String delete(Long id, String keyword, int page) {
         dossierMedicalService.deleteByIdDossierMedical(id);
-        return "redirect:/dossierMedical/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/dossier/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/add")
@@ -79,7 +79,7 @@ public class DossierMedicalController {
 
         dossierMedicalService.save(dossierMedical);
 
-        return "redirect:/dossier/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/dossier/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/edit/{id}")
@@ -102,7 +102,7 @@ public class DossierMedicalController {
         dossierMedical.setIdDossierMedical(dossierMedical1.getIdDossierMedical());
         dossierMedicalService.save(dossierMedical);
         //      dossierMedicalService.update(dossierMedical);
-        return "redirect:/dossier/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/dossier/?page=" + page + "&keyword=" + keyword;
     }
 
 }

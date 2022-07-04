@@ -91,11 +91,11 @@
                                         <td sec:authorize="!hasAuthority('Médecin')"
                                             th:text="'Dr ' + ${consultation.medecin.nom} +' '+ ${consultation.medecin.prenom} "/>
 
-                                        <td sec:authorize="hasAnyAuthority('Administrateur','Médecin')">
+                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
                                             <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
                                                th:href="@{delete(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
-                                        <td sec:authorize="hasAnyAuthority('Administrateur','Médecin')">
+                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
                                             <a class="btn btn-success"
                                                th:href="@{edit/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>

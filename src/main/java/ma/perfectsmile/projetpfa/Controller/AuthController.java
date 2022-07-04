@@ -80,7 +80,7 @@ public class AuthController {
 
         }
 
-        model.addAttribute("utilisateur", utilisateurService.findByNom(arrOfStr[0]));
+        model.addAttribute("utilisateur", utilisateurService.findByUsername(arrOfStr[0],arrOfStr[1]));
         model.addAttribute("roles", roles);
 
         return "auth/profile";

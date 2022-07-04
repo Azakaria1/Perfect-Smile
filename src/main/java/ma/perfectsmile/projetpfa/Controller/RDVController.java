@@ -53,8 +53,10 @@ public class RDVController {
 
         List<RendezVous> rendezVousList = new ArrayList<>();
         for (RendezVous rendezVous : rendezVousService.findAll()) {
-            if (rendezVous.getPatient().equals(currentUser(principal))) rendezVousList.add(rendezVous);
-            else if (rendezVous.getMedecin().equals(currentUser(principal))) rendezVousList.add(rendezVous);
+            if (rendezVous.getPatient().equals(currentUser(principal)))
+                rendezVousList.add(rendezVous);
+            else if (rendezVous.getMedecin().equals(currentUser(principal)))
+                rendezVousList.add(rendezVous);
 
         }
         Page<RendezVous> pagerdvs = new PageImpl<>(rendezVousList);
@@ -74,10 +76,11 @@ public class RDVController {
     }
 
     @GetMapping(path = "/addR/{id}")
-    public String addParPatient(Model model, @PathVariable("id") Long id) {
+    public String addParPatient(Model model, Principal principal, @PathVariable("id") Long id) {
 
         RendezVous rendezVous = new RendezVous();
         rendezVous.setMedecin((Medecin) utilisateurService.findDistinctByIdUtilisateur(id));
+        System.err.println("Current User =>" +currentUser(principal));
         model.addAttribute("rendezVous", rendezVous);
         model.addAttribute("medecin", utilisateurService.findDistinctByIdUtilisateur(id));
 
@@ -90,15 +93,18 @@ public class RDVController {
             bindingresult.getAllErrors().forEach(System.err::println);
             return "redirect:/rdv/addR";
         }
+        Patient patient = (Patient) currentUser(principal);
+        System.err.println("Patient connecté =>" + patient.getUsername());
+        rendezVous.setPatient(patient);
 
-        System.err.println("Médecin affecté:" + rendezVous.getMedecin());  // null !!!
+        System.err.println("Médecin affecté:" + rendezVous.getMedecin());
+        System.err.println("Patient affecté:" + rendezVous.getPatient());  // null !!!
 
-        rendezVous.setPatient((Patient) currentUser(principal));
         rendezVous.setStatut("En attente");
 
         rendezVousService.save(rendezVous);
 
-        return "redirect:/rdv/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/rdv/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/add")
@@ -130,11 +136,15 @@ public class RDVController {
 
         for (Role role : currentUser(principal).getRoles()) {
             if (role.getNom().equals("Patient")) rdv.setPatient((Patient) currentUser(principal));
+            else if (role.getNom().equals("Médecin")) {
+                rdv.setStatut("Accepté");
+                rdv.setMedecin((Medecin) currentUser(principal));
+            }
         }
         rendezVousService.save(rdv);
         System.out.println("Motif du Rendez Vous" + rdv.getMotif());
 
-        return "redirect:/rdv/index?page=" + page + "&keyword=" + keyword;
+        return "redirect:/rdv/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/edit/{id}")

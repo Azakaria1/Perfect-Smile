@@ -67,7 +67,7 @@ public class SecretaireController {
 
         if (bindingresult.hasErrors()) return "secretaire/save";
         secretaire.setPassword(passwordEncoder.encode(secretaire.getPassword()));
-        secretaire.getRoles().add(roleService.findDistinctByNom("Médecin"));
+        secretaire.getRoles().add(roleService.findDistinctByNom("Secrétaire"));
         secretaireService.ajouterSecretaire(secretaire);
 
         return "redirect:/secretaire/?page=" + page + "&keyword=" + keyword;

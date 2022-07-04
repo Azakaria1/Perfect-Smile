@@ -29,7 +29,7 @@
 
                 <div sec:authorize="isAuthenticated()">
 
-                    <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')"
+                    <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('Secrétaire')"
                         style="list-style-type: none">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                            href="#" id="navbarDropdown"
@@ -42,7 +42,7 @@
                                 <div class="d-flex">
                                     <a class="dropdown-item" style="color: black" th:href="@{/medecin/}">Médecins
                                     </a>
-                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/medecin/add}">
+                                    <a  class="btn btn-light" style="color:darkcyan" th:href="@{/medecin/add}">
                                         <i aria-hidden="true" class="fa fa-user-plus"></i>
                                     </a>
                                 </div>
@@ -52,7 +52,7 @@
                                 <div class="d-flex">
                                     <a class="dropdown-item" style="color: black" th:href="@{/secretaire/}">Secrétaires
                                     </a>
-                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/secretaire/add}">
+                                    <a  class="btn btn-light" style="color:darkcyan" th:href="@{/secretaire/add}">
                                         <i aria-hidden="true" class="fa fa-user-plus"></i>
                                     </a>
                                 </div>
@@ -62,7 +62,7 @@
                                 <div class="d-flex">
                                     <a class="dropdown-item" style="color: black" th:href="@{/assistant/}">Assistants
                                     </a>
-                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/assistant/add}">
+                                    <a  class="btn btn-light" style="color:darkcyan" th:href="@{/assistant/add}">
                                         <i aria-hidden="true" class="fa fa-user-plus"></i>
                                     </a>
                                 </div>
@@ -72,7 +72,7 @@
                                 <div class="d-flex">
                                     <a class="dropdown-item" style="color: black" th:href="@{/patient/}">Patients
                                     </a>
-                                    <a class="btn btn-light" style="color:darkcyan" th:href="@{/patient/add}">
+                                    <a  class="btn btn-light" style="color:darkcyan" th:href="@{/patient/add}">
                                         <i aria-hidden="true" class="fa fa-user-plus"></i>
                                     </a>
                                 </div>
@@ -93,20 +93,20 @@
                             Permission</a>
                     </li>
                 </div>
-
-                <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')">
-                        <a class="nav-link" th:href="@{/rdv/index}">
-                            Rendez-vous</a>
-                    </li>
-                </div>
-                <div sec:authorize="isAuthenticated() && !hasAnyAuthority('Assistant','Secrétaire')">
+                <div sec:authorize="isAuthenticated() && !hasAnyAuthority('Secrétaire')">
                     <li class="nav-item" >
                         <a class="nav-link" th:href="@{/medecin/}">
                             <i aria-hidden="true" class="fa fa-users"></i>
                             Médecins</a>
                     </li>
                 </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAnyAuthority('Secrétaire','Assistant')">
+                        <a class="nav-link" th:href="@{/rdv/index}">
+                            Rendez-vous</a>
+                    </li>
+                </div>
+
                 <div sec:authorize="isAuthenticated()">
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Patient')">
                         <a class="nav-link" th:href="@{/rdv/}">
@@ -120,9 +120,9 @@
                     </li>
                 </div>
                 <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin')">
-                        <a class="nav-link" th:href="@{/dossier/index}">
-                            Dossier Médicaux</a>
+                    <li class="nav-item" sec:authorize="hasAuthority('Médecin')">
+                        <a class="nav-link" th:href="@{/dossier/}">
+                            Dossiers Médicaux</a>
                     </li>
                 </div>
                 <div sec:authorize="isAuthenticated()">
