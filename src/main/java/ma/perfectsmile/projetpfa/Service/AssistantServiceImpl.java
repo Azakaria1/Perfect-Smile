@@ -97,7 +97,7 @@ public class AssistantServiceImpl implements AssistantService {
     @Override
     public void modifierOrdonnance(Patient patient, Ordonnance ordonnance) {
         for (Ordonnance o : patient.getOrdonnances()) {
-            if (o.getIdOrdonnance().equals(ordonnance.getIdOrdonnance())) ordonnanceService.updateOrdonnance(o);
+            if (o.getIdOrdonnance().equals(ordonnance.getIdOrdonnance())) ordonnanceService.update(o);
         }
     }
 

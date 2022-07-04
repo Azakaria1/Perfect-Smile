@@ -132,11 +132,24 @@
                     </li>
                 </div>
                 <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="hasAuthority('Médecin')">
+                        <a class="nav-link" th:href="@{/ordonnance/}">
+                            Ordonnance</a>
+                    </li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Secrétaire','Assistant')">
                         <a class="nav-link" th:href="@{/acte/}">
                             Acte</a>
                     </li>
                 </div>
+
+                <div sec:authorize="isAuthenticated()">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Secrétaire','Assistant')">
+                    <a class="nav-link" th:href="@{/medicament/}">
+                        Médicament</a>
+                </li>
+            </div>
                 <div sec:authorize="isAuthenticated()">
                     <li class="nav-item" sec:authorize="hasAnyAuthority('Médecin','Secrétaire','Assistant')">
                         <a class="nav-link" th:href="@{/specialite/}">

@@ -16,13 +16,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <form method="POST" th:action="@{index}">
+                <form method="POST" th:action="@{/medicament/}">
                     <div class="row align-itms-center my-4">
                         <div class="col">
-                            <h2 class="h3 mb-0 page-title">Liste des Consultations</h2>
+                            <h2 class="h3 mb-0 page-title">Liste des Actes</h2>
                         </div>
-                        <div class="col-auto" sec:authorize="hasAuthority('Médecin')">
-                            <a class="btn btn-success" style="color:white" th:href="@{/consultation/add}">
+                        <div class="col-auto">
+                            <a class="btn btn-success" style="color:white" th:href="@{/medicament/add}">
                                 <span style="color:white"></span>Ajouter</i>
                             </a>
 
@@ -39,7 +39,7 @@
                                     <ol class="breadcrumb">
 
                                         <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
-                                        <li class="breadcrumb-item active">Consultations</li>
+                                        <li class="breadcrumb-item active">Actes</li>
                                     </ol>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                             <div class="card-body">
 
                                 <div class="d-flex" style="float: right">
-                                    <form method="get" style="float: right" th:action="@{index}">
+                                    <form method="get" style="float: right" th:action="@{/medicament/}">
                                         <input name="keyword" th:value="${keyword}" type="text">
                                         <button class="btn btn-primary" type="submit"><i
                                                 class="fa fa-search"></i></button>
@@ -62,46 +62,34 @@
                     </div>
                     <div class="container mt-2">
                         <div class="card">
-                            <div class="card-header">Liste des Consultations</div>
+                            <div class="card-header">Liste des Actes</div>
                             <div class="card-body">
+
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Motif</th>
-                                        <th>Nombre de Dents</th>
-                                        <th>Opération</th>
+                                        <th>Nom</th>
+                                        <th>Description</th>
                                         <th>Prix</th>
-                                        <th sec:authorize="!hasAuthority('Médecin')">Consulté par</th>
-                                        <th sec:authorize="!hasAuthority('Patient')">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="consultation:${consultations}">
-                                        <td th:text="${consultation.idConsultation}"></td>
-                                        <td th:text="${consultation.motif}"/>
-                                        <td th:text="${consultation.intervention.getNbDent()}"></td>
-                                        <td>
-                                            <p th:each="acte : ${consultation.getActes()}"
-                                               th:text="${acte.libelle} + ' '"></p>
-                                        </td>
-                                        <td th:text="${consultation.prix} + ' DH'"/>
+                                    <tr th:each="medicament:${medicaments}">
+                                        <td th:text="${medicament.idMedicament}"></td>
+                                        <td th:text="${medicament.nom}"></td>
+                                        <td th:text="${medicament.description}"></td>
+                                        <td th:text="${medicament.prix} + ' DH'"></td>
 
-
-                                        <td sec:authorize="!hasAuthority('Médecin')"
-                                            th:text="'Dr ' + ${consultation.medecin.nom} +' '+ ${consultation.medecin.prenom} "/>
-
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
-                                               th:href="@{/ordonnance/add/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Ajouter Ordonnance</a>
+                                        <td sec:authorize="!hasAuthority('Patient')">
+                                            <a class="btn btn-danger"
+                                               onclick="return confirm('Are you Sure ??')"
+                                               th:href="@{delete(id=${medicament.idMedicament},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
-                                               th:href="@{delete(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Supprimer</a>
-                                        </td>
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-success"
-                                               th:href="@{edit/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                        <td sec:authorize="!hasAuthority('Patient')">
+                                            <a class="btn btn-warning"
+                                               th:href="@{edit/__${medicament.idMedicament}__(id=${medicament.idMedicament},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>
                                     </tr>
 
@@ -124,6 +112,10 @@
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

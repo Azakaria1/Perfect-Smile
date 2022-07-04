@@ -1,17 +1,25 @@
 package ma.perfectsmile.projetpfa.Service;
 
 import ma.perfectsmile.projetpfa.Model.Medicament;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
 public interface MedicamentService {
-    void addMedicament(Medicament medicament);
+    void save(Medicament medicament);
 
-    List<Medicament> getMedicaments();
+    List<Medicament> findAll();
 
     Medicament getMedicament(Long id);
 
     Medicament update(Medicament medicament);
 
-    Boolean deleteMedicament(Long id);
+    void delete(Long id);
+
+    Page<Medicament> findByNomContains(String keyword, PageRequest of);
+
+    Page<Medicament> findByDescriptionContains(String keyword, PageRequest of);
+
+    Medicament findByIdMedicament(Long id);
 }

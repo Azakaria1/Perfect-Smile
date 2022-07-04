@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" layout:decorate="layout"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
     <meta charset="UTF-8">
-    <link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>Les Patients Dialna</title>
+    <!--  <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
           type="text/css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" type="text/css"/>
 </head>
 <body>
 <div layout:fragment="content1">
@@ -19,10 +20,10 @@
                 <form method="POST" th:action="@{index}">
                     <div class="row align-itms-center my-4">
                         <div class="col">
-                            <h2 class="h3 mb-0 page-title">Liste des Consultations</h2>
+                            <h2 class="h3 mb-0 page-title">Liste des Rôles</h2>
                         </div>
-                        <div class="col-auto" sec:authorize="hasAuthority('Médecin')">
-                            <a class="btn btn-success" style="color:white" th:href="@{/consultation/add}">
+                        <div class="col-auto">
+                            <a class="btn btn-primary" style="color:white" th:href="@{/ordonnance/add}">
                                 <span style="color:white"></span>Ajouter</i>
                             </a>
 
@@ -39,7 +40,7 @@
                                     <ol class="breadcrumb">
 
                                         <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
-                                        <li class="breadcrumb-item active">Consultations</li>
+                                        <li class="breadcrumb-item active">Rôles</li>
                                     </ol>
                                 </div>
                             </div>
@@ -51,7 +52,7 @@
                             <div class="card-body">
 
                                 <div class="d-flex" style="float: right">
-                                    <form method="get" style="float: right" th:action="@{index}">
+                                    <form method="get" style="float: right" th:action="@{/ordonnance/}">
                                         <input name="keyword" th:value="${keyword}" type="text">
                                         <button class="btn btn-primary" type="submit"><i
                                                 class="fa fa-search"></i></button>
@@ -60,48 +61,37 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="container mt-2">
                         <div class="card">
-                            <div class="card-header">Liste des Consultations</div>
+                            <div class="card-header">Liste des Rôles</div>
                             <div class="card-body">
+
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Motif</th>
-                                        <th>Nombre de Dents</th>
-                                        <th>Opération</th>
-                                        <th>Prix</th>
-                                        <th sec:authorize="!hasAuthority('Médecin')">Consulté par</th>
-                                        <th sec:authorize="!hasAuthority('Patient')">Action</th>
+                                        <th>Nom</th>
+                                        <th>Permission</th>
+                                        <th> <!--sec:authorize="hasRole('Administrateur')"-->Supprimer</th>
+                                        <th> <!--sec:authorize="hasRole('Administrateur')"-->Modifier</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="consultation:${consultations}">
-                                        <td th:text="${consultation.idConsultation}"></td>
-                                        <td th:text="${consultation.motif}"/>
-                                        <td th:text="${consultation.intervention.getNbDent()}"></td>
-                                        <td>
-                                            <p th:each="acte : ${consultation.getActes()}"
-                                               th:text="${acte.libelle} + ' '"></p>
-                                        </td>
-                                        <td th:text="${consultation.prix} + ' DH'"/>
+                                    <tr th:each="ordonnance :${ordonnances}">
+                                        <td th:text="${ordonnance .idOrdonnance}"></td>
+                                        <td th:text="${ordonnance.description }"></td>
+                                        <td><p th:each="medicament : ${ordonnance.medicaments}"
+                                               th:text="${medicament.nom}+' '"></p></td>
 
-
-                                        <td sec:authorize="!hasAuthority('Médecin')"
-                                            th:text="'Dr ' + ${consultation.medecin.nom} +' '+ ${consultation.medecin.prenom} "/>
-
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
-                                               th:href="@{/ordonnance/add/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Ajouter Ordonnance</a>
+                                        <td> <!--sec:authorize="hasRole('Administrateur')"-->
+                                            <a class="btn btn-danger" onclick="return confirm('Are you fl mario ??')"
+                                               th:href="@{delete(id=${ordonnance.idRole},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
-                                               th:href="@{delete(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Supprimer</a>
-                                        </td>
-                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
+                                        <td> <!--sec:authorize="hasRole('Secretaire')"-->
                                             <a class="btn btn-success"
-                                               th:href="@{edit/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                               th:href="@{edit/__${ordonnance.idRole}__(id=${ordonnance.idRole},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>
                                     </tr>
 

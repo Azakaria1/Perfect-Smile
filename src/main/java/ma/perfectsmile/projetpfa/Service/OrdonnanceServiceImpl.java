@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.perfectsmile.projetpfa.Model.Ordonnance;
 import ma.perfectsmile.projetpfa.repositories.OrdonnanceRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,13 +22,13 @@ public class OrdonnanceServiceImpl implements OrdonnanceService {
     private final OrdonnanceRepository ordoRepo;
 
     @Override
-    public Ordonnance addOrdonnance(Ordonnance ordonnance) {
+    public Ordonnance save(Ordonnance ordonnance) {
         log.info("ajout de l'ordonnance : {}");
-        return ordoRepo.saveAndFlush(ordonnance);
+        return ordoRepo.save(ordonnance);
     }
 
     @Override
-    public List<Ordonnance> getOrdonnances() {
+    public List<Ordonnance> findAll() {
         log.info("Liste des Ordonnances");
         return ordoRepo.findAll();
     }
@@ -34,19 +36,34 @@ public class OrdonnanceServiceImpl implements OrdonnanceService {
     @Override
     public Ordonnance getOrdonnance(Long id) {
         log.info("recherche Ordonnance : {}");
-        return ordoRepo.findOrdonnanceByIdOrdonnance(id);
+        return ordoRepo.findByIdOrdonnance(id);
     }
 
     @Override
-    public Ordonnance updateOrdonnance(Ordonnance ordonnance) {
+    public Ordonnance update(Ordonnance ordonnance) {
         log.info("mise à jour d'Act: {}");
         return ordoRepo.saveAndFlush(ordonnance);
     }
 
     @Override
-    public void deleteOrdonnance(Ordonnance ordonnance) {
+    public void delete(Ordonnance ordonnance) {
         log.info("suppression d'Act: {}", ordonnance.getDescription());
         ordoRepo.delete(ordonnance);
     }
 
+    @Override
+    public Page<Ordonnance> findByDescriptionContains(String keyword, PageRequest of)
+    {
+        return ordoRepo.findByDescriptionContains(keyword, of);
+    }
+    @Override
+    public void deleteByIdOrdonnance(Long id)
+    {
+        ordoRepo.deleteByIdOrdonnance(id);
+    }
+    @Override
+    public Ordonnance findByIdOrdonnance(Long id)
+    {
+        return ordoRepo.findByIdOrdonnance(id);
+    }
 }

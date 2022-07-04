@@ -45,8 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("static/**", "/webjars/**").permitAll();
 
-
-        http.authorizeRequests().antMatchers("/specialite/**", "/acte/**", "/dossier/**", "/rdv/", "/rdv/add").hasAuthority("Médecin");
+        http.authorizeRequests().antMatchers("/ordonnance/**","specialite/**", "/acte/**", "/dossier/**", "/ordonnance/**", "/rdv/", "/rdv/add").hasAuthority("Médecin");
 
         http.authorizeRequests().antMatchers("/dossier/**", "/specialite/**", "/acte/**", "/patient/**",
                         "/secretaire/**", "/assistant/**", "/rdv/index", "/rdv/add", "/rdv/edit", "/medecin/add", "/medecin/delete/**", "/medecin/edit/**",

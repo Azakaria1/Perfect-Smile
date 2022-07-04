@@ -25,19 +25,16 @@ public class Medicament {
     private Long idMedicament;
 
     @NotNull
-    @NotBlank
-    @Length(min = 20)
+    @Length(min = 5)
     @Column(name = "nom", nullable = false)
     private String nom;
 
     @NotNull
-    @NotBlank
     @Length(min = 20)
     @Column(name = "description", nullable = false)
     private String description;
 
     @NotNull
-    @NotBlank
     @DecimalMin("0")
     @Column(name = "prix", nullable = false)
     private double prix;

@@ -94,12 +94,7 @@ public class RDVController {
             return "redirect:/rdv/addR";
         }
         Patient patient = (Patient) currentUser(principal);
-        System.err.println("Patient connecté =>" + patient.getUsername());
         rendezVous.setPatient(patient);
-
-        System.err.println("Médecin affecté:" + rendezVous.getMedecin());
-        System.err.println("Patient affecté:" + rendezVous.getPatient());  // null !!!
-
         rendezVous.setStatut("En attente");
 
         rendezVousService.save(rendezVous);

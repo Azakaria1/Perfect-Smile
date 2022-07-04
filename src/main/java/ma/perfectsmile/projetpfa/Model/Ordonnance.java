@@ -27,17 +27,15 @@ public class Ordonnance {
 
     @NotNull
     @NotBlank
-    @Length(min = 20)
+    @Length(min = 5)
     private String description;
 
     @ManyToOne(
             cascade = CascadeType.ALL) // chaque patient peut avoir plsr ordonnances
-    @NotNull
     @JoinColumn(name = "id_patient")
     private Patient patient;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Medicament> medicaments = new ArrayList<>();
-
 }

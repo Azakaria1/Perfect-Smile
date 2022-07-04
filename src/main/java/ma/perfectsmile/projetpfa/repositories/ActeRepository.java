@@ -16,10 +16,5 @@ public interface ActeRepository extends JpaRepository<Acte, Long> {
 
     Page<Acte> findByLibelleContains(String acteName, Pageable pageable);
 
-    @Modifying
-    @Transactional
-    @Query("update Acte acte set acte.libelle =?1 where acte.idActe =?2")
-    void update(String nom, Long id);
-
     Page<Acte> findByPrixContains(String prix, Pageable pageable);
 }
