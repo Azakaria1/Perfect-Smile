@@ -30,6 +30,15 @@ public class SituationFinanciere {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "paye", nullable = false)
+    private Long paye;
+
+    @Column(name = "reste", nullable = false)
+    private Long reste;
+
+    @Column(name = "total", nullable = false)
+    private Long total;
+
     @OneToOne
     private Patient patient;
 

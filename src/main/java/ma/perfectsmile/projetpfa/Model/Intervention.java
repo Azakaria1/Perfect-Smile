@@ -34,5 +34,4 @@ public class Intervention {
     @OneToMany
     private List<Consultation> consultations;
 
-
 }

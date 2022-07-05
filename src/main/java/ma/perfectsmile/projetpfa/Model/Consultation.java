@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,11 @@ public class Consultation {
 
     @Column(name = "prix", nullable = false)
     private Long prix;
+
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_facture", nullable = false)
+    private Date date_consultation = new Date();
 
     @OneToOne
     @NotNull

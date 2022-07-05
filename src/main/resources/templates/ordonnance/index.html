@@ -20,7 +20,7 @@
                 <form method="POST" th:action="@{index}">
                     <div class="row align-itms-center my-4">
                         <div class="col">
-                            <h2 class="h3 mb-0 page-title">Liste des Rôles</h2>
+                            <h2 class="h3 mb-0 page-title">Liste des Ordonnances</h2>
                         </div>
                         <div class="col-auto">
                             <a class="btn btn-primary" style="color:white" th:href="@{/ordonnance/add}">
@@ -40,7 +40,7 @@
                                     <ol class="breadcrumb">
 
                                         <li class="breadcrumb-item"><a th:href="@{/}">Accueil</a></li>
-                                        <li class="breadcrumb-item active">Rôles</li>
+                                        <li class="breadcrumb-item active">Ordonnances</li>
                                     </ol>
                                 </div>
                             </div>
@@ -65,15 +65,15 @@
 
                     <div class="container mt-2">
                         <div class="card">
-                            <div class="card-header">Liste des Rôles</div>
+                            <div class="card-header">Liste des Ordonnances</div>
                             <div class="card-body">
 
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nom</th>
-                                        <th>Permission</th>
+                                        <th>Description</th>
+                                        <th>Médicament</th>
                                         <th> <!--sec:authorize="hasRole('Administrateur')"-->Supprimer</th>
                                         <th> <!--sec:authorize="hasRole('Administrateur')"-->Modifier</th>
                                     </tr>
@@ -87,11 +87,11 @@
 
                                         <td> <!--sec:authorize="hasRole('Administrateur')"-->
                                             <a class="btn btn-danger" onclick="return confirm('Are you fl mario ??')"
-                                               th:href="@{delete(id=${ordonnance.idRole},keyword=${keyword},page=${currentPage})}">Supprimer</a>
+                                               th:href="@{delete(id=${ordonnance.idOrdonnance},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
                                         <td> <!--sec:authorize="hasRole('Secretaire')"-->
                                             <a class="btn btn-success"
-                                               th:href="@{edit/__${ordonnance.idRole}__(id=${ordonnance.idRole},keyword=${keyword},page=${currentPage} )}">Modifier</a>
+                                               th:href="@{edit/__${ordonnance.idOrdonnance}__(id=${ordonnance.idOrdonnance},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>
                                     </tr>
 

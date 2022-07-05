@@ -25,6 +25,8 @@ public class Facture {
     @NotNull
     private Long prixTotal;
 
+    private Date date_paiement ;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date_facture", nullable = false)
     private Date date_facture = new Date();

@@ -49,20 +49,22 @@ public class OrdonnanceController {
     @GetMapping(path = "/add/{id}")
     public String add(Model model, @PathVariable("id") Long id) {
 
-        Ordonnance ordonnance = new Ordonnance();
-        ordonnance.setPatient(consultationService.findByIdConsultation(id).getRendezVous().getPatient());
-        model.addAttribute("ordonnance", ordonnance);
+        model.addAttribute("ordonnance", new Ordonnance());
         model.addAttribute("medicaments", medicamentService.findAll());
 
         return "ordonnance/save";
     }
 
-    @PostMapping(path = "/save")
-    public String save(@Valid Ordonnance ordonnance, BindingResult bindingresult, @RequestParam(name = "keyword", defaultValue = "") String keyword, @RequestParam(name = "page", defaultValue = "0") int page) {
+    @PostMapping(path = "/save/{id}")
+    public String save(@Valid Ordonnance ordonnance, BindingResult bindingresult, @PathVariable("id") Long id,@RequestParam(name = "keyword", defaultValue = "") String keyword, @RequestParam(name = "page", defaultValue = "0") int page) {
 
         if (bindingresult.hasErrors()) return "ordonnance/save";
 
+        System.err.println("Patient recherché => " + consultationService.findByIdConsultation(id).getRendezVous().getPatient());
+        ordonnance.setPatient(consultationService.findByIdConsultation(id).getRendezVous().getPatient());
+
         ordonnanceService.save(ordonnance);
+
 
         return "redirect:/ordonnance/?page=" + page + "&keyword=" + keyword;
     }

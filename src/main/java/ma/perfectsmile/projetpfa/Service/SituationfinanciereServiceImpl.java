@@ -23,9 +23,10 @@ public class SituationfinanciereServiceImpl implements SituationFinanciereServic
     private final FactureServiceImpl factureService;
 
     @Override
-    public void ajoutSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere) {
+    public SituationFinanciere ajoutSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere) {
         log.info("ajout d'une situation financière ");
-        patient.setSituationFinanciere(situationFinanciereRepo.saveAndFlush(situationFinanciere));
+        situationFinanciere.setPatient(patient);
+        return situationFinanciereRepo.save(situationFinanciere);
     }
 
     @Override
@@ -43,7 +44,8 @@ public class SituationfinanciereServiceImpl implements SituationFinanciereServic
     @Override
     public void modifierStuationFinanciere(Patient patient, SituationFinanciere situationFinanciere) {
         log.info("modification de la situation financière numéro : {} ", situationFinanciere.getIdSituation());
-        patient.setSituationFinanciere(situationFinanciereRepo.saveAndFlush(situationFinanciere));
+        situationFinanciere.setPatient(patient);
+        situationFinanciereRepo.save(situationFinanciere);
     }
 
     @Override
@@ -61,8 +63,7 @@ public class SituationfinanciereServiceImpl implements SituationFinanciereServic
     public void updatePatientFacture(Patient patient, Facture facture) {
         List<Facture> factures = patient.getSituationFinanciere().getFactures();
         for (Facture f : factures) {
-            if (f.getIdfacture().equals(facture.getIdfacture()))
-                factureService.update(f);
+            if (f.getIdfacture().equals(facture.getIdfacture())) factureService.update(f);
         }
     }
 }

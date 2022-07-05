@@ -68,7 +68,7 @@ public class PatientController {
         patient.getRoles().add(roleService.findDistinctByNom("Patient"));
         patientService.ajouterPatient(patient);
 
-        return "redirect:/patient?page=" + page + "&keyword=" + keyword;
+        return "redirect:/patient/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/edit/{id}")
@@ -96,7 +96,7 @@ public class PatientController {
 
         patientService.ajouterPatient(patient);
 
-        return "redirect:/patient?page=" + page + "&keyword=" + keyword;
+        return "redirect:/patient/?page=" + page + "&keyword=" + keyword;
 
     }
 }

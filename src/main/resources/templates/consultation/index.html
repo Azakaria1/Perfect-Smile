@@ -92,7 +92,7 @@
                                             th:text="'Dr ' + ${consultation.medecin.nom} +' '+ ${consultation.medecin.prenom} "/>
 
                                         <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">
-                                            <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
+                                            <a class="btn btn-danger"
                                                th:href="@{/ordonnance/add/__${consultation.idConsultation}__(id=${consultation.idConsultation},keyword=${keyword},page=${currentPage})}">Ajouter Ordonnance</a>
                                         </td>
                                         <td sec:authorize="hasAnyAuthority('Secrétaire','Médecin')">

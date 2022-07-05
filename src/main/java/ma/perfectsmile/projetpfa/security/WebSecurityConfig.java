@@ -45,17 +45,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("static/**", "/webjars/**").permitAll();
 
-        http.authorizeRequests().antMatchers("/ordonnance/**","specialite/**", "/acte/**", "/dossier/**", "/ordonnance/**", "/rdv/", "/rdv/add").hasAuthority("Médecin");
-
-        http.authorizeRequests().antMatchers("/dossier/**", "/specialite/**", "/acte/**", "/patient/**",
-                        "/secretaire/**", "/assistant/**", "/rdv/index", "/rdv/add", "/rdv/edit", "/medecin/add", "/medecin/delete/**", "/medecin/edit/**",
+        http.authorizeRequests().antMatchers("/dossier/**","/intervention/**", "/patient/**",
+                        "/secretaire/**", "/assistant/**", "/medecin/add", "/medecin/delete/**", "/medecin/edit/**",
                         "/role/**", "/permission/**").hasAuthority("Secrétaire")
 
-                .and().authorizeRequests().antMatchers("/intervention/**", "/acte/**", "/specialite/**").hasAnyAuthority("Secrétaire", "Assistant")
+                .and().authorizeRequests().antMatchers("/ordonnance/**", "/dossier/**", "/ordonnance/**").hasAuthority("Médecin")
+
+                .and().authorizeRequests().antMatchers("/intervention/**").hasAnyAuthority("Assistant")
                 .and().formLogin().defaultSuccessUrl("/").permitAll() // to permit all the users to see the login page
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
 
-        http.authorizeRequests().antMatchers("/rdv/index").hasAuthority("Assistant");
-        http.authorizeRequests().antMatchers("/rdv/", "/rdv/add").hasAuthority("Patient");
     }
 }

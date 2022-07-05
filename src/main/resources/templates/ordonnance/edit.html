@@ -11,19 +11,19 @@
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
 
-        <form method="POST" th:action="@{/role/update/__${role.idRole}__(page=${page},keyword=${keyword})}">
+        <form method="POST" th:action="@{/ordonnance/update/__${ordonnance.idRole}__(page=${page},keyword=${keyword})}">
             <div>
 
-                <label for="nom">Nom</label>
-                <input id="nom" class="form-control" type="text" name="nom" th:value="${role.nom}">
-                <span class="text-danger" th:errors="${role.nom}"></span>
+                <label for="description">Description</label>
+                <input id="description" class="form-control" type="text" name="description" th:value="${ordonnance.description}">
+                <span class="text-danger" th:errors="${ordonnance.description}"></span>
             </div>
             <div>
-                <label>Rôle</label>
+                <label>Médicament</label>
                 <ul>
-                    <li th:each="permission : ${permissions}">
-                        <input type="checkbox" th:field="${role.permissions}" th:value="${permission.id_Permission}"
-                               th:text="${permission.nom}" />
+                    <li th:each="medicament : ${medicaments}">
+                        <input type="checkbox" th:field="${ordonnance.medicaments}" th:value="${medicament.idMedicament}"
+                               th:text="${medicament.nom}" />
                     </li>
                 </ul>
             </div>

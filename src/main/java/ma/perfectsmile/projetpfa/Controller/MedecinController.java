@@ -60,7 +60,7 @@ public class MedecinController {
     @GetMapping(path = "/delete")
     public String delete(Long id, String keyword, int page) {
         medecinService.deleteById(id);
-        return "redirect:/medecin?page=" + page + "&keyword=" + keyword;
+        return "redirect:/medecin/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/add")
@@ -80,7 +80,7 @@ public class MedecinController {
         medecin.getRoles().add(roleService.findDistinctByNom("Médecin"));
         medecinService.ajouterMedecin(medecin);
 
-        return "redirect:/medecin?page=" + page + "&keyword=" + keyword;
+        return "redirect:/medecin/?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping(path = "/edit/{id}")

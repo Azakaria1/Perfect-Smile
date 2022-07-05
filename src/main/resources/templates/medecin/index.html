@@ -96,13 +96,13 @@
                                             <td sec:authorize="hasAuthority('Secrétaire')">
                                                 <a class="btn btn-danger"
                                                    onclick="return confirm('Are you Sure ??')"
-                                                   th:href="@{delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
+                                                   th:href="@{/medecin/delete(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
                                                     <i aria-hidden="true" class="fa fa-trash"></i>
                                                     Supprimer</a>
                                             </td>
                                             <td sec:authorize="hasAuthority('Secrétaire')">
                                                 <a class="btn btn-warning"
-                                                   th:href="@{edit/__${p.idUtilisateur}__(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
+                                                   th:href="@{/medecin/edit/__${p.idUtilisateur}__(id=${p.idUtilisateur},keyword=${keyword},page=${currentPage} )}">
                                                     <i aria-hidden="true" class="fa fa-edit"></i>
                                                     Modifier</a>
                                             </td>

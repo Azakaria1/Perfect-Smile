@@ -7,7 +7,7 @@ import ma.perfectsmile.projetpfa.Model.SituationFinanciere;
 import java.util.List;
 
 public interface SituationFinanciereService {
-    void ajoutSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere);
+    SituationFinanciere ajoutSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere);
 
     List<SituationFinanciere> getAllSituationFinanciere();
 

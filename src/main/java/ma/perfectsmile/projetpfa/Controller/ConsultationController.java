@@ -121,9 +121,15 @@ public class ConsultationController {
         facture.setPrixTotal(consultation.getPrix());
         facture.setConsultation(consultation);
 
-        factureService.save(facture);
-
         consultationService.save(consultation);
+
+        consultationService.ajouteFacture(
+                facture,consultation.getIdConsultation(),
+                consultation.getRendezVous().getPatient());
+
+        consultationService.ajouterSituationFinanciere( new SituationFinanciere(),
+                consultation.getIdConsultation(), consultation.getRendezVous().getPatient());
+
         return "redirect:/consultation/index?page=" + page + "&keyword=" + keyword;
     }
 

@@ -131,10 +131,12 @@ public class RDVController {
 
         for (Role role : currentUser(principal).getRoles()) {
             if (role.getNom().equals("Patient")) rdv.setPatient((Patient) currentUser(principal));
-            else if (role.getNom().equals("Médecin")) {
+            else if (role.getNom().equals("Médecin") ) {
                 rdv.setStatut("Accepté");
                 rdv.setMedecin((Medecin) currentUser(principal));
             }
+            else if (role.getNom().equals("Assistant") || role.getNom().equals("Secrétaire"))
+                rdv.setStatut("Accepté");
         }
         rendezVousService.save(rdv);
         System.out.println("Motif du Rendez Vous" + rdv.getMotif());
