@@ -24,10 +24,6 @@ public class RDVController {
 
     @Autowired
     private RendezVousServiceImpl rendezVousService;
-
-    @Autowired
-    private ConsultationServiceImpl consultationService;
-
     @Autowired
     private UtilisateurService utilisateurService;
 

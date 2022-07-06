@@ -28,6 +28,7 @@ public interface RendezVousRepository extends JpaRepository<RendezVous,Long> {
 
  RendezVous findDistinctByIdRDV(Long id);
 
+
  void deleteByIdRDV(Long id);
 
 }
