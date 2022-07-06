@@ -85,23 +85,6 @@ public class AssistantServiceImpl implements AssistantService {
     }
 
     @Override
-    public void remplirOrdonnance(Patient patient, Ordonnance ordonnance) {
-        patient.getOrdonnances().add(ordonnance);
-    }
-
-    @Override
-    public void supprimerOrdonnance(Patient patient, Ordonnance ordonnance) {
-        patient.getOrdonnances().remove(ordonnance);
-    }
-
-    @Override
-    public void modifierOrdonnance(Patient patient, Ordonnance ordonnance) {
-        for (Ordonnance o : patient.getOrdonnances()) {
-            if (o.getIdOrdonnance().equals(ordonnance.getIdOrdonnance())) ordonnanceService.update(o);
-        }
-    }
-
-    @Override
     public void ajouterSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere) {
         patient.setSituationFinanciere(situationFinanciere);
     }

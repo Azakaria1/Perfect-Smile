@@ -32,8 +32,8 @@ public class Ordonnance {
 
     @ManyToOne(
             cascade = CascadeType.ALL) // chaque patient peut avoir plsr ordonnances
-    @JoinColumn(name = "id_patient")
-    private Patient patient;
+    @JoinColumn(name = "id_consultation")
+    private Consultation consultation;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)

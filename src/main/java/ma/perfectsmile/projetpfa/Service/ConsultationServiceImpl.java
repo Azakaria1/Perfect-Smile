@@ -101,10 +101,8 @@ public class ConsultationServiceImpl implements ConsultationService {
         List<Intervention> intervention = interventionService.findAll();
 
         for (int i = 0; i < interventions.size(); i++) {
-            Intervention intervention2 = intervention.get(i);
-            for (Consultation consultation1 : intervention2.getConsultations()) {
-                if (consultation1.equals(consultation)) somme += (intervention2.getPrix());
-            }
+             if (consultation.getIntervention().equals(intervention.get(i)))
+                 somme += (intervention.get(i).getPrix());
         }
 
         sf.setTotal(somme);
@@ -120,4 +118,5 @@ public class ConsultationServiceImpl implements ConsultationService {
 
         return situationfinanciereService.ajoutSituationFinanciere(patient, sf);
     }
+
 }

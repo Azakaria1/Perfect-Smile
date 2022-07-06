@@ -1,5 +1,9 @@
 package ma.perfectsmile.projetpfa;
 
+import ma.perfectsmile.projetpfa.Model.Patient;
+import ma.perfectsmile.projetpfa.Model.Role;
+import ma.perfectsmile.projetpfa.Model.Secretaire;
+import ma.perfectsmile.projetpfa.Model.Specialite;
 import ma.perfectsmile.projetpfa.Service.PatientServiceImpl;
 import ma.perfectsmile.projetpfa.Service.RoleServiceImpl;
 import ma.perfectsmile.projetpfa.Service.SecretaireServiceImpl;
@@ -12,6 +16,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 @SpringBootApplication
 public class ProjetPfaApplication {
 
@@ -22,11 +30,11 @@ public class ProjetPfaApplication {
         SpringApplication.run(ProjetPfaApplication.class, args);
     }
 
-    @Bean
-    @Transactional
+    /*@Bean
+    @Transactional*/
     CommandLineRunner commandLineRunner(SecretaireServiceImpl secretaireService, SpecialiteServiceImpl specialiteService, PatientServiceImpl patientService, RoleServiceImpl roleService) {
         return args -> {
-            /*// On ajoute un compte Secrétaire (administrateur de l'app)
+            // On ajoute un compte Secrétaire (administrateur de l'app)
             Role role = new Role(null, "Secrétaire", new ArrayList<>());
             Role role2 = new Role(null, "Patient", new ArrayList<>());
             roleService.save(role);
@@ -46,11 +54,12 @@ public class ProjetPfaApplication {
 
              secretaireService.ajouterSecretaire(secretaire);
 
+
             Patient patient = new Patient();
             patient.setNom("Achour");
             patient.setPrenom("Zakaria");
             patient.setEmail("achourzakaria@gmail.com");
-            secretaire.setAdresse("Casablanca, Maroc");
+            patient.setAdresse("Casablanca, Maroc");
             patient.setPassword(passwordEncoder.encode("123456789"));
             patient.setTel("0698765432");
             patient.setDate_naissance(new Date(100, Calendar.MAY,15));
@@ -59,10 +68,9 @@ public class ProjetPfaApplication {
             patient.setSexe("Homme");
 
             patientService.ajouterPatient(patient);
-
              Specialite specialite = new Specialite();
             specialite.setNom("Chirurgie");
-            specialiteService.save( specialite );*/
+            specialiteService.save( specialite );
         };
     }
 }

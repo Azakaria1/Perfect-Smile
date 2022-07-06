@@ -136,7 +136,13 @@ public class RDVController {
                 rdv.setMedecin((Medecin) currentUser(principal));
             }
             else if (role.getNom().equals("Assistant") || role.getNom().equals("Secrétaire"))
+            {
                 rdv.setStatut("Accepté");
+                rendezVousService.save(rdv);
+                System.out.println("Motif du Rendez Vous" + rdv.getMotif());
+
+                return "redirect:/rdv/index?page=" + page + "&keyword=" + keyword;
+            }
         }
         rendezVousService.save(rdv);
         System.out.println("Motif du Rendez Vous" + rdv.getMotif());

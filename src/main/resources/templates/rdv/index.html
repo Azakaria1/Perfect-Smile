@@ -100,11 +100,18 @@
                                         <td th:text="${rdv.statut}"></td>
 
 
+                                        <th:block th:if="${rdv.statut.equals('Accepté')}">
+                                        <td sec:authorize="hasAuthority('Médecin')"  >
+                                            <a class="btn btn-success" th:href="@{/consultation/add/__${rdv.idRDV}__(id=${rdv.idRDV},keyword=${keyword},page=${currentPage})}">
+                                                Ajouter une ordonnance</a>
+                                        </td>
+                                        </th:block>
                                         <td sec:authorize="!hasAuthority('Patient')">
                                             <a class="btn btn-danger" onclick="return confirm('Are you Sure ??')"
                                                th:href="@{delete(id=${rdv.idRDV},keyword=${keyword},page=${currentPage})}">Supprimer</a>
                                         </td>
-                                        <td sec:authorize="hasAnyAuthority('Administrateur', 'Secrétaire','Assistant')">
+
+                                        <td sec:authorize="hasAnyAuthority('Secrétaire','Assistant')">
                                             <a class="btn btn-success"
                                                th:href="@{edit/__${rdv.idRDV}__(id=${rdv.idRDV},keyword=${keyword},page=${currentPage} )}">Modifier</a>
                                         </td>

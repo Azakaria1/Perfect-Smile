@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -61,14 +60,13 @@ public class ConsultationController {
     }
 
     @GetMapping(path = "/")
-    public String consultationsPatient(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "5") int size, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
+    public String consultationsPatient(Model model, Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "5") int size, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
 
         List<Consultation> consultationList = new ArrayList<>();
         for (Consultation consultation : consultationService.getConsultations()) {
             if (consultation.getRendezVous().getPatient().equals(currentUser(principal)))
                 consultationList.add(consultation);
-            if (consultation.getMedecin().equals(currentUser(principal)))
-                consultationList.add(consultation);
+            if (consultation.getMedecin().equals(currentUser(principal))) consultationList.add(consultation);
 
         }
         Page<Consultation> pageconsultations = new PageImpl<>(consultationList);
@@ -80,24 +78,29 @@ public class ConsultationController {
         model.addAttribute("keyword", keyword);
         return "consultation/index";
     }
+
     @GetMapping(path = "/delete")
     public String delete(Long id, String keyword, int page) {
         consultationService.deleteByIdConsultation(id);
         return "redirect:/consultation/index?page=" + page + "&keyword=" + keyword;
     }
-    @GetMapping(path = "/add")
-    public String add(Model model) {
+
+    @GetMapping(path = "/add/{id}")
+    public String add(Model model, @PathVariable("id") Long id) {
+
+
         model.addAttribute("consultation", new Consultation());
+        model.addAttribute("rdv", rendezVousService.findDistinctByIdRDV(id));
         model.addAttribute("intervention", new Intervention());
         model.addAttribute("actes", acteService.findAll());
-        model.addAttribute("rdvs", rendezVousService.findAll());
 
         return "consultation/save";
     }
 
 
-    @PostMapping(path = "/save")
-    public String save(@Valid Consultation consultation, @Valid Intervention intervention, BindingResult bindingresult, @RequestParam(name = "keyword", defaultValue = "") String keyword, @RequestParam(name = "page", defaultValue = "0") int page, Principal principal) {
+    @PostMapping(path = "/save/{id}")
+    public String save(@Valid Consultation consultation, @PathVariable("id") Long id, @Valid Intervention intervention, BindingResult bindingresult, @RequestParam(name = "keyword", defaultValue = "") String keyword, @RequestParam(name = "page", defaultValue = "0") int page, Principal principal) {
+
         if (bindingresult.hasErrors()) {
             bindingresult.getAllErrors().forEach(System.err::println);
             return "consultation/save";
@@ -105,30 +108,29 @@ public class ConsultationController {
 
         System.out.println(consultation.getMotif() + " => id: " + consultation.getIdConsultation()); // id = null ???!!!
 
+        System.err.println("Id transmis => " + id);
+        consultation.setRendezVous(rendezVousService.findDistinctByIdRDV(id));
+
         consultation.setMedecin(currentUser(principal));
 
         intervention.setPrix(intervention.getNbDent() * 60L);
 
         consultation.setIntervention(intervention);
-        consultation.setPrix(consultation.getIntervention().getPrix() +
-                consultation.getActes().stream().mapToLong(Acte::getPrix).sum());
+        consultation.setPrix(consultation.getIntervention().getPrix() + consultation.getActes().stream().mapToLong(Acte::getPrix).sum());
 
         System.out.println("intervention ajoutée => " + intervention.getIdIntervention() + " , Dents: " + intervention.getNbDent() + " prix = " + intervention.getPrix() + " DH");
 
         interventionService.save(consultation.getIntervention());
 
-        Facture facture= new Facture();
+        Facture facture = new Facture();
         facture.setPrixTotal(consultation.getPrix());
         facture.setConsultation(consultation);
 
         consultationService.save(consultation);
 
-        consultationService.ajouteFacture(
-                facture,consultation.getIdConsultation(),
-                consultation.getRendezVous().getPatient());
+        consultationService.ajouteFacture(facture, consultation.getIdConsultation(), consultation.getRendezVous().getPatient());
 
-        consultationService.ajouterSituationFinanciere( new SituationFinanciere(),
-                consultation.getIdConsultation(), consultation.getRendezVous().getPatient());
+        consultationService.ajouterSituationFinanciere(new SituationFinanciere(), consultation.getIdConsultation(), consultation.getRendezVous().getPatient());
 
         return "redirect:/consultation/index?page=" + page + "&keyword=" + keyword;
     }
@@ -136,7 +138,8 @@ public class ConsultationController {
     @GetMapping(path = "/edit/{id}")
     public String editConsultation(Model model, @PathVariable("id") Long id, String keyword, int page) {
         //Consultation consultation= consultationService.findById(id).get();
-        if (consultationService.findByIdConsultation(id) == null) throw new RuntimeException("Page introuvable a sadi9");
+        if (consultationService.findByIdConsultation(id) == null)
+            throw new RuntimeException("Page introuvable a sadi9");
 
         model.addAttribute("consultation", consultationService.findByIdConsultation(id));
         model.addAttribute("intervention", consultationService.findByIdConsultation(id).getIntervention());

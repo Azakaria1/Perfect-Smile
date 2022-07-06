@@ -60,8 +60,8 @@ public class OrdonnanceController {
 
         if (bindingresult.hasErrors()) return "ordonnance/save";
 
-        System.err.println("Patient recherché => " + consultationService.findByIdConsultation(id).getRendezVous().getPatient());
-        ordonnance.setPatient(consultationService.findByIdConsultation(id).getRendezVous().getPatient());
+        System.err.println("Consultation recherchée => " + consultationService.findByIdConsultation(id));
+        ordonnance.setConsultation(consultationService.findByIdConsultation(id));
 
         ordonnanceService.save(ordonnance);
 

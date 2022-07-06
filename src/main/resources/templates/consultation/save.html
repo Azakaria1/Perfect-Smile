@@ -54,7 +54,7 @@
 
                     <div class="col-md-6 offset-3" style="max-width: 600px">
 
-                        <form method="post" th:action="@{save}" th:object="${consultation}">
+                        <form method="post" th:action="@{/consultation/save/__${rdv.idRDV}__(page=${page},keyword=${keyword})}" th:object="${consultation}">
 
 
                             <div>
@@ -65,18 +65,6 @@
                             </div>
 
                             <div>
-                                <label>Rendez-Vous</label>
-                                <ul>
-                                    <li th:each="rdv : ${rdvs}">
-                                        <input th:field="${consultation.rendezVous}" th:text="${rdv.motif}"
-                                               th:value="${rdv.idRDV}"
-                                               type="checkbox"/>
-
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div>
                                 <label>Opération</label>
                                 <ul>
                                     <li th:each="acte : ${actes}">
@@ -86,6 +74,15 @@
 
                                     </li>
                                 </ul>
+
+                            </div>
+                            <div hidden>
+                                <label>Rendez Vous</label>
+                                <input class="form-control" id="rendezVous" name="rendezVous" th:field="${consultation.rendezVous}"
+                                       th:value="${rdv}"
+                                       type="text">
+                                <span class="text-danger" th:errors="${consultation.rendezVous}"></span>
+
 
                             </div>
                             <div>

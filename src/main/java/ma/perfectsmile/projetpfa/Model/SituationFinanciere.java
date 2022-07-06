@@ -24,14 +24,8 @@ public class SituationFinanciere {
     @Column(name = "id_situation", nullable = false)
     private Long idSituation;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 20)
-    @Column(name = "description", nullable = false)
-    private String description;
-
     @Column(name = "paye", nullable = false)
-    private Long paye;
+    private Long paye = 0L;
 
     @Column(name = "reste", nullable = false)
     private Long reste;

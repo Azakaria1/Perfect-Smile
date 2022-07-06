@@ -33,12 +33,6 @@ public interface MedecinService {
 
     void validerRendezVous(Medecin medecin, RendezVous rendezVous);
 
-    void remplirOrdonnance(Patient patient, Ordonnance ordonnance);
-
-    void supprimerOrdonnance(Patient patient, Ordonnance ordonnance);
-
-    void modifierOrdonnance(Patient patient, Ordonnance ordonnance);
-
     void ajouterSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere);
 
     void modifierSituationFinanciere(Patient patient, SituationFinanciere situationFinanciere);

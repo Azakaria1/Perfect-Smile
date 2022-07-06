@@ -34,7 +34,6 @@ public class Consultation {
     private Date date_consultation = new Date();
 
     @OneToOne
-    @NotNull
     private RendezVous rendezVous;
 
     @OneToOne
@@ -61,4 +60,7 @@ public class Consultation {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Acte> actes;
+
+    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "consultation")
+    private List<Ordonnance> ordonnances;
 }

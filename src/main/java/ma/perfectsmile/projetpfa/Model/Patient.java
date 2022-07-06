@@ -27,6 +27,4 @@ public class Patient extends Utilisateur{
     @OneToOne
     private SituationFinanciere situationFinanciere;
 
-    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "patient")
-    private List<Ordonnance> ordonnances;
 }
